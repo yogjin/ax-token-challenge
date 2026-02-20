@@ -8,21 +8,59 @@ const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
 ---
 
 <Base title="Days">
-  <h1>일별 기록</h1>
-  <p>매일 토큰으로 뭘 했는지 기록합니다.</p>
+  <div class="page-header animate-in">
+    <h1>기록</h1>
+    <p class="page-desc">매일 토큰으로 뭘 했는지 기록합니다.</p>
+  </div>
 
-  {days.length === 0 ? (
-    <p style="color: var(--muted);">아직 기록이 없습니다.</p>
-  ) : (
-    days.map(day => (
-      <a href={`${base}days/${day.id}/`} style="text-decoration: none; color: inherit;">
-        <div class="day-card">
-          <h3>{day.data.title}</h3>
-          <div class="meta">
-            {day.data.date} · 토큰: {day.data.tokens} · {day.data.problems}개 문제 해결
-          </div>
-        </div>
-      </a>
-    ))
-  )}
+  <div class="post-list">
+    {days.length === 0 ? (
+      <p class="empty">아직 기록이 없습니다.</p>
+    ) : (
+      days.map((day, i) => (
+        <a href={`${base}days/${day.id}/`} class="card-link">
+          <article class={`day-card animate-in stagger-${i + 1}`}>
+            <div class="day-card-date">{day.data.date}</div>
+            <h3>{day.data.title}</h3>
+            <div class="meta">
+              토큰: {day.data.tokens} · {day.data.problems}개 문제 해결 · {day.data.tools.join(', ')}
+            </div>
+          </article>
+        </a>
+      ))
+    )}
+  </div>
 </Base>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-desc {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-link:hover {
+    text-decoration: none;
+  }
+
+  .day-card-date {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .empty {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
