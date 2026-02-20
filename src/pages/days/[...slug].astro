@@ -18,10 +18,10 @@ const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
 const tocItems = headings.filter(h => h.depth === 2);
 ---
 
-<Base title={day.data.title}>
+<Base title={day.data.title} noStickyHeader>
   <div class="post-layout">
     <article class="post">
-      <header class="post-header animate-in">
+      <div class="post-header animate-in">
         <a href={`${base}days/`} class="back-link">&larr; 전체 기록</a>
         <time class="post-date">{day.data.date}</time>
         <h1>{day.data.title}</h1>
@@ -33,7 +33,7 @@ const tocItems = headings.filter(h => h.depth === 2);
           <span class="meta-divider">·</span>
           <span class="meta-text">토큰: {day.data.tokens}</span>
         </div>
-      </header>
+      </div>
       <div class="post-body animate-in stagger-2">
         <Content />
       </div>
@@ -42,7 +42,7 @@ const tocItems = headings.filter(h => h.depth === 2);
     {tocItems.length > 0 && (
       <aside class="toc-aside">
         <nav class="toc">
-          <h2 class="toc-title">ON THIS PAGE</h2>
+          <p class="toc-title">ON THIS PAGE</p>
           <ul>
             {tocItems.map(heading => (
               <li>
@@ -74,24 +74,27 @@ const tocItems = headings.filter(h => h.depth === 2);
     .toc-aside {
       display: block;
       position: fixed;
-      top: 120px;
+      top: 100px;
       left: calc(50% + 380px);
-      width: 220px;
+      width: 200px;
     }
 
     .toc {
+      display: block;
       padding-left: 1rem;
       border-left: 1px solid var(--border);
+      font-size: 0.82rem;
+      letter-spacing: normal;
     }
 
     .toc-title {
       font-family: var(--font-body);
       font-size: 0.72rem;
-      font-weight: 700;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--muted);
-      margin: 0 0 0.6rem;
+      margin: 0 0 0.75rem;
     }
 
     .toc ul {
@@ -101,11 +104,11 @@ const tocItems = headings.filter(h => h.depth === 2);
     }
 
     .toc li {
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.5rem;
     }
 
     .toc a {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--muted);
       text-decoration: none;
       line-height: 1.4;
@@ -120,6 +123,7 @@ const tocItems = headings.filter(h => h.depth === 2);
 
     .toc a.active {
       color: var(--accent);
+      font-weight: 500;
     }
   }
 
