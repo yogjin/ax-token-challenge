@@ -12,6 +12,8 @@ export async function getStaticPaths() {
 
 const { day } = Astro.props;
 const { Content } = await render(day);
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
 ---
 
 <Base title={`Day ${day.data.day} — ${day.data.title}`}>
@@ -27,6 +29,6 @@ const { Content } = await render(day);
   <Content />
 
   <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-    <a href={`${import.meta.env.BASE_URL}days/`}>&larr; 전체 기록</a>
+    <a href={`${base}days/`}>&larr; 전체 기록</a>
   </div>
 </Base>
