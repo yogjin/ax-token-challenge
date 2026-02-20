@@ -1,0 +1,180 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | AX 토큰 챌린지</title>
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --fg: #e5e5e5;
+        --muted: #888;
+        --accent: #3b82f6;
+        --border: #2a2a2a;
+        --code-bg: #1a1a1a;
+        --max-w: 720px;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.7;
+        padding: 2rem 1.5rem;
+      }
+
+      .container {
+        max-width: var(--max-w);
+        margin: 0 auto;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9rem;
+      }
+
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      nav a:hover, nav a.active {
+        color: var(--fg);
+      }
+
+      h1 { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; }
+      h2 { font-size: 1.3rem; margin: 2rem 0 0.8rem; font-weight: 600; }
+      h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; font-weight: 600; }
+
+      p { margin-bottom: 1rem; }
+
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      ul, ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+      li { margin-bottom: 0.3rem; }
+
+      pre {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1rem;
+        overflow-x: auto;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        position: relative;
+      }
+
+      code {
+        font-family: 'SF Mono', 'Fira Code', monospace;
+        font-size: 0.85em;
+      }
+
+      :not(pre) > code {
+        background: var(--code-bg);
+        padding: 0.15rem 0.4rem;
+        border-radius: 3px;
+      }
+
+      .prompt-block {
+        background: var(--code-bg);
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        padding: 1.2rem;
+        margin: 1rem 0;
+        position: relative;
+      }
+
+      .prompt-block .copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--border);
+        color: var(--fg);
+        border: none;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.75rem;
+      }
+
+      .prompt-block .copy-btn:hover {
+        background: var(--accent);
+      }
+
+      .day-card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.2s;
+      }
+
+      .day-card:hover {
+        border-color: var(--accent);
+      }
+
+      .day-card h3 { margin: 0 0 0.5rem; }
+      .day-card .meta { color: var(--muted); font-size: 0.85rem; }
+
+      .stat {
+        display: inline-block;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+        font-size: 0.85rem;
+      }
+
+      .stat .label { color: var(--muted); }
+      .stat .value { color: var(--fg); font-weight: 600; }
+
+      footer {
+        margin-top: 4rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a href={`${base}`}>Home</a>
+        <a href={`${base}days/`}>Days</a>
+        <a href={`${base}prompts/`}>Prompts</a>
+      </nav>
+      <slot />
+      <footer>
+        <p>AX 토큰 챌린지 — 토큰을 의식적으로 쓰고, 그 과정을 공유합니다.</p>
+      </footer>
+    </div>
+    <script>
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const block = btn.closest('.prompt-block');
+          const code = block?.querySelector('code, pre')?.textContent || block?.textContent || '';
+          navigator.clipboard.writeText(code.trim());
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

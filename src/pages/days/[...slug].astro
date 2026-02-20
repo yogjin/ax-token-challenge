@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const days = await getCollection('days');
+  return days.map(day => ({
+    params: { slug: `day-${day.data.day}` },
+    props: { day },
+  }));
+}
+
+const { day } = Astro.props;
+const { Content } = await render(day);
+---
+
+<Base title={`Day ${day.data.day} — ${day.data.title}`}>
+  <h1>Day {day.data.day} — {day.data.title}</h1>
+
+  <div style="margin-bottom: 2rem;">
+    <span class="stat"><span class="label">날짜: </span><span class="value">{day.data.date}</span></span>
+    <span class="stat"><span class="label">토큰: </span><span class="value">{day.data.tokens}</span></span>
+    <span class="stat"><span class="label">해결한 문제: </span><span class="value">{day.data.problems}개</span></span>
+    <span class="stat"><span class="label">도구: </span><span class="value">{day.data.tools.join(', ')}</span></span>
+  </div>
+
+  <Content />
+
+  <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+    <a href={`${import.meta.env.BASE_URL}days/`}>&larr; 전체 기록</a>
+  </div>
+</Base>
