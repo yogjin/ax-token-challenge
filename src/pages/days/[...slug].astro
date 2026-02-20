@@ -5,7 +5,7 @@ import { getCollection, render } from 'astro:content';
 export async function getStaticPaths() {
   const days = await getCollection('days');
   return days.map(day => ({
-    params: { slug: `day-${day.data.day}` },
+    params: { slug: day.id },
     props: { day },
   }));
 }
@@ -16,8 +16,8 @@ const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : rawBase + '/';
 ---
 
-<Base title={`Day ${day.data.day} — ${day.data.title}`}>
-  <h1>Day {day.data.day} — {day.data.title}</h1>
+<Base title={day.data.title}>
+  <h1>{day.data.title}</h1>
 
   <div style="margin-bottom: 2rem;">
     <span class="stat"><span class="label">날짜: </span><span class="value">{day.data.date}</span></span>

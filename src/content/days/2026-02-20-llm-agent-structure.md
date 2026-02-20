@@ -1,7 +1,6 @@
 ---
-day: 1
 title: "LLM 에이전트의 구조를 진단 기반으로 학습하다"
-date: "2025-02-20"
+date: "2026-02-20"
 tokens: "측정 중"
 problems: 3
 tools: ["Claude Code"]

@@ -4,7 +4,6 @@ import { glob } from 'astro/loaders';
 const days = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/days' }),
   schema: z.object({
-    day: z.number(),
     title: z.string(),
     date: z.string(),
     tokens: z.string(),
